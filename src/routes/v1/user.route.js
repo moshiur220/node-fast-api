@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
   const filter = pick(req.query, ["name", "role"]);
   const options = pick(req.query, ["sortBy", "limit", "page"]);
-  console.log(req.query);
+  // console.log(req.query);
   console.log(filter);
   res.send("hello");
 });
