@@ -28,16 +28,35 @@ const paginate = (schema) => {
    * @returns {Promise<QueryResult>}
    */
   schema.statics.paginate = async function (filter, options) {
-    let sort = "";
+    let sort = {};
+    // if (options.sortBy) {
+    //   const sortingCriteria = [];
+    //   options.sortBy.split(",").forEach((sortOption) => {
+    //     const [key, order] = sortOption.split(":");
+    //     sortingCriteria.push((order === "desc" ? "-" : "") + key);
+    //   });
+    //   sort = sortingCriteria.join(" ");
+    // } else {
+    //   sort = "createdAt";
+    // }
+
+    // new sort database
     if (options.sortBy) {
-      const sortingCriteria = [];
+      // const sortingCriteria = [];
       options.sortBy.split(",").forEach((sortOption) => {
+        // const [key, order] = sortOption.split(":");
         const [key, order] = sortOption.split(":");
-        sortingCriteria.push((order === "desc" ? "-" : "") + key);
+        // sortingCriteria.push((order === "desc" ? "-" : "") + key);
+        if (order === "desc") {
+          sort[key] = -1;
+        } else {
+          sort[key] = 1;
+        }
       });
-      sort = sortingCriteria.join(" ");
+      // sort = sortingCriteria.join(" ");
     } else {
-      sort = "createdAt";
+      // sort = "createdAt";
+      sort["createdAt"] = -1;
     }
 
     const limit =
