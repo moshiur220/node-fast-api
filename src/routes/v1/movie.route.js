@@ -11,4 +11,9 @@ router
   .route("/")
   .get(validate(movieValidation.getMovieQuery), MovieController.getMovieQuery)
   .post(validate(movieValidation.createMovie), MovieController.createMovie);
+router
+  .route("/:id")
+  .get(validate(movieValidation.getMovieById), MovieController.getMovieById)
+  .patch(validate(movieValidation.updateMovie), MovieController.updateMovie)
+  .delete(validate(movieValidation.deleteMovie), MovieController.deleteMovie);
 module.exports = router;
