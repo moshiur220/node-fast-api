@@ -8,23 +8,21 @@ const { buildController, buildRepository } = require("./build");
 exports.init = async (program) => {
   program
     .command("g:c")
-    .description(
-      "Build Controller, Usage: node ebp build:controller <controller-name>"
-    )
-    .argument("<controllerName>", "Controller Name")
-    .action(async (controllerName) => {
-      console.log(`Building Controller: ${controllerName}`);
-      await buildController(controllerName);
+    .description("Build crud, Usage: node ebp build:crud <crud-name>")
+    .argument("<crudName>", "crud Name")
+    .action(async (crudName) => {
+      console.log(`Building crud: ${crudName}`);
+      await buildController(crudName);
     });
 
-  program
-    .command("build:repository")
-    .description(
-      "Build Repository, Usage: node ebp build:repository <repository-name>"
-    )
-    .argument("<repositoryName>", "Repository Name")
-    .action(async (repositoryName) => {
-      console.log(`Building Repository: ${repositoryName}`);
-      await buildRepository(repositoryName);
-    });
+  // program
+  //   .command("build:repository")
+  //   .description(
+  //     "Build Repository, Usage: node ebp build:repository <repository-name>"
+  //   )
+  //   .argument("<repositoryName>", "Repository Name")
+  //   .action(async (repositoryName) => {
+  //     console.log(`Building Repository: ${repositoryName}`);
+  //     await buildRepository(repositoryName);
+  //   });
 };

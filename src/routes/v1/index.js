@@ -1,5 +1,6 @@
 const express = require("express");
-const userRoute = require("./movie.route");
+const movieRoute = require("./movie.route");
+const userRoute = require("./User.route");
 const router = express.Router();
 
 const defaultRoutes = [
@@ -9,6 +10,10 @@ const defaultRoutes = [
   //   },
   {
     path: "/movies",
+    route: movieRoute,
+  },
+  {
+    path: "/users",
     route: userRoute,
   },
 ];
