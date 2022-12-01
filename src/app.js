@@ -9,6 +9,9 @@ const createError = require("http-errors");
 const morgan = require("morgan");
 const routes = require("./routes/v1");
 const app = express();
+const { expressjwt: jwt } = require("express-jwt");
+const jwksClient = require("jwks-rsa");
+app.use(express.static("src/public"));
 app.use(morgan("dev"));
 // set security HTTP headers
 app.use(helmet());
@@ -29,6 +32,20 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options("*", cors());
+
+// Here is configration auth jwt
+app.use(
+  jwt({
+    secret: jwksClient.expressJwtSecret({
+      jwksUri: "http://localhost:3000/.well-know/jwks.json",
+      cache: true,
+      rateLimit: true,
+    }),
+    algorithms: ["RS256"],
+  }).unless({
+    path: ["/", "/v1/users/login"],
+  })
+);
 
 // version V1 router is here
 app.use("/v1", routes);

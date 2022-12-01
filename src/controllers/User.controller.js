@@ -8,7 +8,8 @@ const pick = require("../libs/pick");
 const UserService = require("../services/User.service");
 const httpStatus = require("http-status");
 const ApiError = require("../libs/ApiError");
-const jwt = require("jsonwebtoken");
+const JWT = require("jsonwebtoken");
+const fs = require("fs");
 class UserController {
   // get the User functions
   static getUserQuery = catchAsync(async (req, res) => {
@@ -40,7 +41,13 @@ class UserController {
   static loginUser = catchAsync(async (req, res) => {
     const user = await UserService.loginUser(req.body);
     // delete user.userPassword;
-    const token = jwt.sign({ user }, process.env.TOKEN_SECRET);
+    // just think about we are login with jwt this route
+    const secret = fs.readFileSync("./src/certs/private.pem");
+    const token = JWT.sign({ user }, secret, {
+      expiresIn: "10min",
+      algorithm: "RS256",
+    });
+    // const token = jwt.sign({ user }, process.env.TOKEN_SECRET);
     res.send({ user, token });
     // res.status(httpStatus.CREATED).send(User);
   });
